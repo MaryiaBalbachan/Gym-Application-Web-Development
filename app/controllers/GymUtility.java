@@ -33,7 +33,7 @@ public class GymUtility {
     public static double calculateStartBMI(Member member) {
         float height = member.getHeight();
         float weight = member.getStartingweight();
-        double bmi = weight / height / height;
+        double bmi = weight / height / height*10000;
         return toTwoDecimalPlaces(bmi);
     }
 

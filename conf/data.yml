@@ -49,8 +49,8 @@ Member(m2):
   email: lisa@simpson.com
   password: secret
   address: 734 Evergreen Terrace
-  height: 155
-  startingweight: 50
+  height: 125
+  startingweight: 45
   assessments:
     - a3
     - a4
