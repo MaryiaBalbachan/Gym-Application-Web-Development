@@ -1,0 +1,115 @@
+*{Member Dashboard, displays member's name, bmi, ideal weight, bmi Category}*
+*{List their assessments in a table and allows to add assessments. BMI is recalculated based on the last assessment added.}*
+
+
+#{extends 'main.html' /}
+#{set title:'Dashboard' /}
+#{menu id:"dashboard"/}
+
+<section class="ui grey inverted segment">
+  <header class="ui header">
+    <div class="ui horizontal segments">
+      <div class="ui teal center aligned segment">
+        <br>
+        <img class="ui tiny avatar image" src="public/images/family.jpg">
+        ${member.firstname} ${member.lastname}
+      </div>
+      <div class="ui teal center aligned segment">
+        <i class="big red heartbeat icon"></i>
+        <h3>${bmi}</h3>
+      </div>
+      <div class="ui teal center aligned segment">
+        #{if isIdealBodyWeight==true}
+        <i class="big green thumbs up icon"></i>
+        <h3>IDEAL WEIGHT INDICATOR</h3>
+        #{/if}
+        #{else}
+          <i class="big red thumbs down icon"></i>
+          <h3>IDEAL WEIGHT INDICATOR</h3>
+        #{/else}
+      </div>
+      <div class="ui teal center aligned segment">
+        #{if determineBMICategory.equals("SEVERELY UNDERWEIGHT")||determineBMICategory.equals("SEVERELY OBESE")}
+        <i class="big red user doctor icon"></i>
+        <h3>${determineBMICategory}</h3>
+        #{/if}
+        #{elseif determineBMICategory.equals("UNDERWEIGHT")||determineBMICategory.equals("OVERWEIGHT")||
+        determineBMICategory.equals("MODERATELY OBESE")}
+          <i class="big orange user doctor icon"></i>
+          <h3>${ determineBMICategory}</h3>
+        #{/elseif}
+        #{elseif determineBMICategory.equals("NORMAL")}
+          <i class="big green user doctor icon"></i>
+          <h3>${ determineBMICategory}</h3>
+        #{/elseif}
+        #{else}
+          <h3>UNABLE TO DISPLAY bmiCATEGORY</h3>
+        #{/else}
+      </div>
+    </div>
+  </header>
+
+  <table class="ui celled table">
+    <thead>
+    <tr><th>Weight</th>
+      <th>Chest</th>
+      <th>Thigh</th>
+      <th>Upper Arm</th>
+      <th>Waist</th>
+      <th>Hips</th>
+      <th>Trainer Comments</th>
+    </tr></thead>
+    <tbody>
+    <div class="ui bulleted list">
+    #{list items:assessments, as:'assessment'}
+    <tr>
+      <td> ${assessment.weight} </td>
+      <td> ${assessment.chest} </td>
+      <td> ${assessment.thigh} </td>
+      <td> ${assessment.upperarm} </td>
+      <td> ${assessment.waist} </td>
+      <td> ${assessment.hips} </td>
+      <td> ${assessment.comment} </td>
+
+      <td> <a href="/dashboard/${member.id}/deleteassessment/${assessment.id} "class="ui icon button">
+        <i class="red trash icon"></i> </a> </td>
+
+    #{/list}
+    </div>
+    </tbody>
+  </table>
+
+</section>
+
+<form class="ui equal width form" action="/dashboard/addAssessment" method="POST">
+  <div class="fields">
+    <div class="field">
+      <label>Weight</label>
+      <input placeholder="Weight" type="number" name="weight">
+    </div>
+    <div class="field">
+      <label>Chest</label>
+      <input placeholder="Chest" type="number" name="chest">
+    </div>
+    <div class="field">
+      <label>Thigh</label>
+      <input placeholder="Thigh" type="number" name="thigh">
+    </div>
+  </div>
+  <div class="fields">
+    <div class="field">
+      <label>Upper Arm</label>
+      <input placeholder="Upper Arm" type="number" name="upperarm">
+    </div>
+    <div class="field">
+      <label>Waist</label>
+      <input placeholder="Waist" type="number" name="waist">
+    </div>
+    <div class="field">
+      <label>Hips</label>
+      <input placeholder="Hips" type="number" name="hips">
+    </div>
+  </div>
+  <button class="ui blue submit button">Add assessment</button>
+</form>
+

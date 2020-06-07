@@ -1,0 +1,29 @@
+*{First page presented to the user. Options to sign up or login are displayed}*
+
+#{extends 'main.html' /}
+#{set title:'About' /}
+
+#{welcomemenu id:"start"/}
+
+<section class="ui center aligned middle aligned segment">
+  <h1 class="ui header">
+    Welcome to your interactive Gym App
+  </h1>
+  <div class="ui two column middle aligned grid basic segment">
+    <div class="column">
+      <h2>
+        BMI Tracker
+      </h2>
+      <p>
+        Fill your assessments week by week, track your progress and your BMI. Your trainer will review your progress,
+        leave comments and encourage you to keep going! You have already made your first step to a healthier YOU!
+      </p>
+      <p>
+        Sign up to start your journey with us or Login to view your details.
+      </p>
+    </div>
+    <div class="column">
+      <img class="ui large image" src="/public/images/start.jpeg">
+    </div>
+  </div>
+</section>

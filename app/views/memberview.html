@@ -1,0 +1,89 @@
+*{Displays detailed view of the selected member: name, bmi, bmi Category, Ideal Weight and a list of assessments}*
+*{Allows trainer to enter a comment and adds it to the member's assessment.}*
+
+#{extends 'main.html' /}
+#{set title:'Trainer Dashboard' /}
+#{trainerview/}
+
+<section class="ui grey inverted segment">
+    <header class="ui header">
+        <div class="ui horizontal segments">
+            <div class="ui teal center aligned segment">
+                <br>
+                <img class="ui tiny avatar image" src="/public/images/family.jpg">
+            ${member.firstname} ${member.lastname}
+            </div>
+            <div class="ui teal center aligned segment">
+                <i class="big red heartbeat icon"></i>
+                <h3>${bmi}</h3>
+            </div>
+            <div class="ui teal center aligned segment">
+            #{if isIdealBodyWeight==true}
+                <i class="big green thumbs up icon"></i>
+                <h3>IDEAL WEIGHT INDICATOR</h3>
+            #{/if}
+            #{else}
+                <i class="big red thumbs down icon"></i>
+                <h3>IDEAL WEIGHT INDICATOR</h3>
+            #{/else}
+            </div>
+            <div class="ui teal center aligned segment">
+            #{if determineBMICategory.equals("SEVERELY UNDERWEIGHT")||determineBMICategory.equals("SEVERELY OBESE")}
+                <i class="big red user doctor icon"></i>
+                <h3>${ determineBMICategory}</h3>
+            #{/if}
+            #{elseif determineBMICategory.equals("UNDERWEIGHT")||determineBMICategory.equals("OVERWEIGHT")||
+            determineBMICategory.equals("MODERATELY OBESE")}
+                <i class="big orange user doctor icon"></i>
+                <h3>${ determineBMICategory}</h3>
+            #{/elseif}
+            #{elseif determineBMICategory.equals("NORMAL")}
+                <i class="big green user doctor icon"></i>
+                <h3>${ determineBMICategory}</h3>
+            #{/elseif}
+            #{else}
+                <i class="big user doctor icon"></i>
+                <h3>UNABLE TO DISPLAY CATEGORY</h3>
+            #{/else}
+            </div>
+        </div>
+    </header>
+#{list items:member.assessments, as:'assessment'}
+    <table class="ui celled table">
+        <div class="field">
+            <thead>
+            <tr>
+                <th>Weight</th>
+                <th>Chest</th>
+                <th>Thigh</th>
+                <th>Upper Arm</th>
+                <th>Waist</th>
+                <th>Hips</th>
+                <th>Comments</th>
+            </tr>
+            </thead>
+        <tbody>
+            <tr>
+                <td> ${assessment.weight} </td>
+                <td> ${assessment.chest} </td>
+                <td> ${assessment.thigh} </td>
+                <td> ${assessment.upperarm} </td>
+                <td> ${assessment.waist} </td>
+                <td> ${assessment.hips} </td>
+                <td> ${assessment.comment}</td>
+
+            <td> <a href="/trainerview/${member.id}/deleteassessmenttrainer/${assessment.id} "class="ui icon button">
+                <i class="red trash icon"></i> </a> </td>
+
+        </div>
+        </tbody>
+    </table>
+    <form class="ui secondary equal width form" action="/addcomment/${assessment.id}" method="POST">
+        <div class="field">
+            <label>Trainer Comments</label>
+            <input type="text" name="comment" placeholder="Comments">
+        </div>
+        <button class="ui button" type="submit">Submit</button>
+     </form>
+    #{/list}
+</section>

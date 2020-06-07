@@ -1,0 +1,32 @@
+*{Displays trainer dashboard with a list of all registered members, allows trainer to delete a member or expand member
+ view to display assessments and BMI categories}*
+
+#{extends 'main.html' /}
+#{set title:'Trainer Dashboard' /}
+#{trainerview/}
+
+<section class="ui grey center aligned inverted segment">
+    <h3 class="ui header">
+        <img class="ui avatar image" src="public/images/marge.jpg">
+       Trainer ${trainer.firstname} ${trainer.lastname}
+    </h3>
+
+</section>
+#{list items:members, as:'member'}
+    <section class="ui teal raised segment">
+        <h3 class="ui header">
+
+            <img class="ui tiny avatar image" src="public/images/family.jpg">
+        ${member.firstname} ${member.lastname}
+        </h3>
+        <p>
+        ${member.assessments.size()} Assessments submitted
+        </p>
+        <a href="/members/${member.id}" class="ui icon button">
+            <i class="blue icon folder open"></i>
+        </a>
+       <a href="/dashboard/deletemember/${member.id}" class="ui icon button">
+            <i class="red icon trash"></i>
+        </a>
+    </section>
+#{/list}
